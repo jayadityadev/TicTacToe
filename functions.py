@@ -5,20 +5,26 @@ import time
 def red_text(text):
     return f"\033[91m{text}\033[0m"
 
+
 def green_text(text):
     return f"\033[92m{text}\033[0m"
+
 
 def yellow_text(text):
     return f"\033[93m{text}\033[0m"
 
+
 def blue_text(text):
     return f"\033[94m{text}\033[0m"
+
 
 def orange_text(text):
     return f"\033[38;5;208m{text}\033[0m"
 
+
 def clear_screen():
     os.system('cls' if os.name == 'nt' else 'clear')
+
 
 def print_board(values):
     clear_screen()
@@ -28,6 +34,7 @@ def print_board(values):
     print("-----------------")
     print(f"  {values[7]}  |  {values[8]}  |  {values[9]}")
     print()
+
 
 def get_player_input(player, values):
     while True:
@@ -42,6 +49,7 @@ def get_player_input(player, values):
         except ValueError:
             print(yellow_text("Invalid input. Please enter a number."))
 
+
 def check_winner(values):
     winning_combinations = [
         [1, 2, 3], [4, 5, 6], [7, 8, 9],
@@ -49,7 +57,7 @@ def check_winner(values):
         [1, 5, 9], [3, 5, 7]
     ]
     for combination in winning_combinations:
-        if len(set([values[pos] for pos in combination])) == 1 and values[combination[0]] != ' ':
+        if values[combination[0]] == values[combination[1]] == values[combination[2]] != ' ':
             return True
     return False
 
@@ -67,11 +75,11 @@ def game_mode():
         print(red_text("\n\nExiting the game...\n"))
         exit()
 
-def single_player_mode():
+
+def single_player_mode(placeholders):
     try:
         begin = input(orange_text("\nPress Enter to start the game..."))
         if begin == '':
-            placeholders = {i: ' ' for i in range(1, 10)}
             while True:
                 for player in [1, 2]:
                     print_board(placeholders)
@@ -80,7 +88,7 @@ def single_player_mode():
                     else:
                         position = random.choice([i for i in range(1, 10) if placeholders[i] == ' '])
                         print(orange_text(f"AI (O) selects position: {position}"))
-                        time.sleep(1)  # Add a delay of 1 second
+                        time.sleep(1)
                     placeholders[position] = 'X' if player == 1 else 'O'
                     if check_winner(placeholders):
                         print_board(placeholders)
@@ -97,11 +105,10 @@ def single_player_mode():
         print(red_text("\n\nExiting the game...\n"))
         exit()
 
-def multi_player_mode():
+def multi_player_mode(placeholders):
     try:
         begin = input(orange_text("\nPress Enter to start the game..."))
         if begin == '':
-            placeholders = {i: ' ' for i in range(1, 10)}
             while True:
                 for player in range(1, 3):
                     print_board(placeholders)
@@ -109,7 +116,7 @@ def multi_player_mode():
                     placeholders[position] = 'X' if player == 1 else 'O'
                     if check_winner(placeholders):
                         print_board(placeholders)
-                        print(green_text(f"\nPlayer {player} wins!\n"))
+                        print(green_text("\nPlayer {player} wins!\n"))
                         return
                     if ' ' not in placeholders.values():
                         print_board(placeholders)
@@ -121,34 +128,3 @@ def multi_player_mode():
     except KeyboardInterrupt:
         print(red_text("\n\nExiting the game...\n"))
         exit()
-
-def main():
-    print("""
-    Tic-Tac-Toe Game:
-
-    How to Play:
-    1. The game starts with an empty grid.
-    2. Players take turns entering the position where they want to place their mark ('X' or 'O').
-       Positions are numbered from 1 to 9, corresponding to the grid layout as follows:
-
-            1 | 2 | 3
-           -----------
-            4 | 5 | 6
-           -----------
-            7 | 8 | 9
-
-    3. To place your mark, enter the position number when prompted.
-    4. The first player to get three of their marks in a row (horizontally, vertically, or diagonally) wins.
-    5. If all spaces are filled without any player achieving three in a row, the game ends in a tie.
-
-    Have fun playing Tic-Tac-Toe!
-    """)
-    
-    mode = game_mode()
-    if mode == 1:
-        single_player_mode()
-    elif mode == 2:
-        multi_player_mode()
-
-if __name__ == "__main__":
-    main()
