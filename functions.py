@@ -2,29 +2,32 @@ import os
 import random
 import time
 
+
+# Colored text functions
+
 def red_text(text):
     return f"\033[91m{text}\033[0m"
-
 
 def green_text(text):
     return f"\033[92m{text}\033[0m"
 
-
 def yellow_text(text):
     return f"\033[93m{text}\033[0m"
 
-
 def blue_text(text):
     return f"\033[94m{text}\033[0m"
-
 
 def orange_text(text):
     return f"\033[38;5;208m{text}\033[0m"
 
 
+# Function to clear the console screen
+
 def clear_screen():
     os.system('cls' if os.name == 'nt' else 'clear')
 
+
+# Function to print the Tic Tac Toe board
 
 def print_board(values):
     clear_screen()
@@ -35,6 +38,8 @@ def print_board(values):
     print(f"  {values[7]}  |  {values[8]}  |  {values[9]}")
     print()
 
+
+# Function to get player input
 
 def get_player_input(player, values):
     while True:
@@ -50,6 +55,8 @@ def get_player_input(player, values):
             print(yellow_text("Invalid input. Please enter a number."))
 
 
+# Function to check if there's a winner
+
 def check_winner(values):
     winning_combinations = [
         [1, 2, 3], [4, 5, 6], [7, 8, 9],
@@ -60,6 +67,9 @@ def check_winner(values):
         if values[combination[0]] == values[combination[1]] == values[combination[2]] != ' ':
             return True
     return False
+
+
+# Function to choose game mode
 
 def game_mode():
     try:
@@ -75,6 +85,8 @@ def game_mode():
         print(red_text("\n\nExiting the game...\n"))
         exit()
 
+
+# Function for single player mode
 
 def single_player_mode(placeholders):
     try:
@@ -105,6 +117,9 @@ def single_player_mode(placeholders):
         print(red_text("\n\nExiting the game...\n"))
         exit()
 
+
+# Function for multiplayer mode
+
 def multi_player_mode(placeholders):
     try:
         begin = input(orange_text("\nPress Enter to start the game..."))
@@ -116,7 +131,7 @@ def multi_player_mode(placeholders):
                     placeholders[position] = 'X' if player == 1 else 'O'
                     if check_winner(placeholders):
                         print_board(placeholders)
-                        print(green_text("\nPlayer {player} wins!\n"))
+                        print(green_text(f"\nPlayer {player} wins!\n"))
                         return
                     if ' ' not in placeholders.values():
                         print_board(placeholders)
