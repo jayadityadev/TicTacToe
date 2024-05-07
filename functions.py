@@ -104,7 +104,7 @@ def single_player_mode(placeholders):
                     placeholders[position] = 'X' if player == 1 else 'O'
                     if check_winner(placeholders):
                         print_board(placeholders)
-                        print(green_text("\nPlayer 1 wins!\n")) if player == 1 else print(orange_text("\nAI wins!\n"))
+                        print(green_text("\nPlayer 1 wins!\n")) if player == 1 else print(green_text("\nAI wins!\n"))
                         return
                     if ' ' not in placeholders.values():
                         print_board(placeholders)
