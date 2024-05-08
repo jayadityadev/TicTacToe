@@ -46,9 +46,9 @@ def get_player_input(player, values):
         try:
             position = int(input(blue_text(f"Player {player} -> Position to place {'X' if player == 1 else 'O'} [1-9]: ")))
             if position not in range(1, 10):
-                print("Invalid position. Try again.")
+                print(yellow_text("Invalid position. Try again."))
             elif values[position] != ' ':
-                print("Position already occupied. Try again.")
+                print(yellow_text("Position already occupied. Try again."))
             else:
                 return position
         except ValueError:
